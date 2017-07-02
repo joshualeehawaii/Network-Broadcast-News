@@ -9,6 +9,8 @@ const client = net.createConnection({port: 6969, host: '0.0.0.0'}, () => {
 
 client.on('connect', () => {
   process.stdin.pipe(client);
-  //console.log('client inputed data');
 });
 
+client.on('data', (data) => {
+  process.stdout.write(data);
+});
