@@ -15,13 +15,16 @@ const server = net.createServer((socket) => {
 
   //Add client to list
   clients.push(socket);
-  //console.log('this is the client list', clients);
 
   //Data flowing to clients
   socket.on('data', (data) => {
-    process.stdout.write(socket.name + data);
+    process.stdout.write(socket.name + ' : ' + data);
     clients.forEach((client) => {
-      client.write(socket.name + data);
+      if (client === socket){
+        return;
+      } else {
+        client.write(data);
+      }
     });
   });
 });
