@@ -17,10 +17,13 @@ const server = net.createServer((socket) => {
   clients.push(socket);
   //console.log('this is the client list', clients);
 
+  //Data flowing to clients
   socket.on('data', (data) => {
-    console.log(socket.remoteAddress + ' : ' + data.toString());
+    process.stdout.write(socket.name + data);
+    clients.forEach((client) => {
+      client.write(socket.name + data);
+    });
   });
-
 });
 
 //Starting the server listening for connections
