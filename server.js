@@ -11,7 +11,6 @@ const server = net.createServer((socket) => {
 
   //Identify this client
   socket.name = socket.remoteAddress;
-  console.log(socket.name + ' joined the chat');
 
   //Add client to list
   clients.push(socket);
