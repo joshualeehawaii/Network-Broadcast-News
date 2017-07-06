@@ -3,12 +3,12 @@ const net = require('net');
 const readline = require('readline');
 const rl = readline.createInterface({input: process.stdin, output: process.stdout});
 
-//*STEP 1: USERNAME REGISTRSTION*
+//* STEP 1: USERNAME REGISTRSTION *
 
 var username = '';
 var invalidUsernames = ['[ADMIN]', 'ADMIN'];
 
-//User must start by adding a usernameß
+//User must start by adding a username
 getUsername();
 
 function getUsername(){
@@ -21,23 +21,24 @@ function getUsername(){
       username += answer;
       rl.close();
       process.stdin.resume();
-      connectToServer();
+      connectToServer(answer);
     }
   });
 }
 
-//*STEP 2: CONNECT CLIENT TO CHAT*
-function connectToServer(){
+//* STEP 2: CONNECT CLIENT TO CHAT *
+function connectToServer(answer){
   //Connect client to server
   const client = net.createConnection({port: 6969, host: '0.0.0.0'}, () => {
-   console.log('connected to chat');
   });
   //data in
+  client.write(answer + ' has joined the chat' + '\n');
+
   client.on('connect', () => {
    process.stdin.pipe(client);
   });
   //data out
   client.on('data', (data) => {
-   process.stdout.write(username + ' : ' + data);
+   process.stdout.write(data);
  });
 }
